@@ -1,0 +1,7 @@
+# formal logic 
+
+## Natural Deduction 
+
+1. Intuition of proof procedure 
+1. understanding discharge 
+1. Restrictions in Predict logic
