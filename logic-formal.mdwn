@@ -2,6 +2,27 @@
 
 ## Natural Deduction 
 
-1. Intuition of proof procedure 
-1. understanding discharge 
-1. Restrictions in Predict logic
+1. Intuition of proof procedure
+    - $\cfrac{}{T}$ : at the top of the formular
+    >> `semantics` : `T` depends on nothing to be true $\iff$ `T` is the logic-truth.  
+    >> $\models T \iff \cfrac{}{T}$ 
+    - $\cfrac{A}{O}$ This is at the top of the formular
+    >> There is `NO` bar over `A` $\iff$ `A` is an assumption.   
+    >> `O` is the output of current rule.   
+    >> `semantics` : `O` depends on the assumption `A` being true $\iff$ $... A \vdash O$
+    - $\cfrac{I}{C}$:  `NOT` at the top of the formular
+    >> There is other fomular over `I`.   
+    >> `semantics` : `I ` is the inference output of previous rule and input current rule.   
+    >> `semantics` : `C` is the inference output of current rule.
+
+    There are two roles (players) in natural deduction:
+    >- . Inference rules, they are basically `n-ary` functions, it contains: 
+    >   - inference inputs (one or more) 
+    >   - inference output (one)
+    >- . Assumptions 
+TODO: an example to explain above concepts: 
+
+1. Discharge 
+information preservation :
+
+2. Restrictions in Predict logic
