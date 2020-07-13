@@ -1,0 +1,190 @@
+# formal logic 
+
+## Natural Deduction  (`Stack method`)
+
+
+1. Intuition of proof procedure 
+    >   `inference rule are function that take inputs and return output`
+
+    - $\cfrac{I}{O}$ : at the top of the `stack`
+    >> There is `NO` bar over `I` $\iff$ `I` is an assumption.   
+    >> `O` is the output of current rule.   
+    >> `semantics` : `O` depends on the assumption `A` being true $\iff$ $... A \vdash O$
+   
+    - $\cfrac{}{O}$ : at the top of the `stack`
+    >> `semantics` : There is no `I` over the `bar`, it means `O` depends on nothing to be true $\iff$ `T` is the logic-truth.  
+    >> $\models T \iff \cfrac{}{T}$ 
+
+    - $\cfrac{I}{C}$:  `NOT` at the top of the `stack`
+    >> There is other stack over `I`.   
+    >> `semantics` : `I ` includes the inference outputs of previous rules and inputs of current rule.   
+    >> `semantics` : `C` is the inference output of current rule.
+
+    There are two roles (players) in natural deduction:
+    >- . Inference rules, they are basically `n-ary` functions, it contains: 
+    >   - n inference `inputs` (wff or subproofs)
+    >   - one inference `output`
+    >- . Assumptions (need to be traced and discharged is necessary)
+
+    example:
+    >![natural deduction example](.imags/../imgs/natural_example.jpg)
+    > example of showing $\neg (P \land Q) \rightarrow (\neg P \lor \neg Q)$
+
+
+    >![natural deduction example](.imags/../imgs/natural_func_1.jpg)
+    > Inference rules are functions that take one wff as input $\lor I$ or two wff as inputs $\land I$.
+
+    >![natural deduction example](.imags/../imgs/natural_func_2.jpg)
+    > Inference rules are functions that take subproofs and a wff as input ($\lor E$).   
+    > This function ($\lor E$) discharges the dependencies of some assumption in subproofs .  
+    > eg. Function $\lor E$ is of type:
+    > - $\lor E$ :: $(\Gamma_1 \vdash \alpha \lor \beta) \rightarrow (\Gamma_2, \alpha \vdash \gamma) \rightarrow (\Gamma_3,\beta \vdash \gamma) \rightarrow  (\Gamma_o \vdash \gamma)$  
+        >> - it takes three input arguments and return one output  
+        >> - $\Gamma$ represent the set of whatever assumptions not been discharged (`dependencies`) up to the proof of following theorem.   
+        >> - therefore, $\vdash$ can be seen as an `infix function` ($inputs \vdash outputs$). This tuple (`input`, `output`) describes the relation between whatever (`context` / `assumptions`) needed to prove the (`theorem` / `conclusion`). It has the type: $(\vdash) :: inputs \rightarrow outputs$.
+    >
+    >> arg 1: $(\Gamma_1 \vdash \alpha \lor \beta)$ , based on whatever context assumptions we have proved $\alpha \lor \beta$      
+    >> arg 2: $(\Gamma_2, \alpha \vdash \gamma)$ , based on the assumption that $\alpha$ we proved $\gamma$  
+    >> arg 3: $(\Gamma_3, \beta \vdash \gamma)$ , based on the assumption that $\beta $ we proved $\gamma$  
+    >> return : $\Gamma_o \vdash \gamma$ , based on `undischarged` context assumptions of argument 1,2,3 ($\Gamma_o = \Gamma_1 + \Gamma_2 + \Gamma_3$).  Based on $\Gamma_o$ we proved $\gamma$.  
+    >
+    >>   `Intuition`: 
+    >> - provided that `arg 1`               : (within some context $\Gamma_1$ we proved $\alpha$ or $\beta$)
+    >> - provided that `arge 2`     : (we can prove $\gamma$ from assumption(context) ($\Gamma_1, \alpha$))
+    >> - provided that `arg 3`      : (we can prove $\gamma$ from assumption(context) ($\Gamma_2, \beta$))
+    >> - $\lor E$ shows the `output`           : ($\gamma$ can be proved for sure given `arg 1, 2, 3`, assumptions $\alpha$ and $\beta$ can be `discharged`, because the `output` contains information being carried by $\alpha$ & $\beta$, while all other context information still enforce.)
+    > 
+    > In case of $\lor E_1$  
+    >> $arg 1$ $:=$ $\vdash \neg P \lor P$  
+    >> $arg 2$ $:=$ $\Gamma_2 P \vdash \neg P \lor \neg Q$   
+    >> $arg 3$ $:=$ $\neg P \vdash \neg P \lor \neg Q$    
+    >> $output$  = $\Gamma_o \vdash \neg P \lor \neg Q$   
+    >
+    > `Red parts in the above chart`
+    > - $arg 1$ is replaced by ' $\vdash \neg P \lor P$ ', because of `law of excluded middle` (in classical logic) $\neg P \lor P$ is a logic-truth (axiom), it depends on no assumptions(context), so there is nothing before $\vdash$, $|Gamma_1$ is an empty set.
+    > - $arg 2$ is replaced by ' $\Gamma_2, P \vdash \neg P \lor \neg Q$ ', $\Gamma_2$ refers to assumptions $\neg (P \land Q)$ and $Q$. 
+    > - $arg 3$ is replaced by ' $\neg P \vdash \neg P \lor \neg Q$ '
+    > - output is $\Gamma_o \vdash \neg P \lor \neg Q$, $\Gamma_o = \Gamma_2$, it is the context of $arg 2$, assumption $P$ in $arg 2$ and assumption $\neg P$ in $arg 3$ are discharged. subtitle `1`.
+    > - out goal is to discharge all assumptions and context of $arg 2$.  $\neg (P \land Q)$ and $Q$  are discharged by functions $\lor E_2$ and $\rightarrow I_3$ respectively.
+
+    >![natural deduction example](.imags/../imgs/natural_func_3.jpg)
+    > - inference rule is a function that takes a subproof as input ($\rightarrow I$)  
+    > - this function ($\rightarrow I$) summarize the relation between assumption and proved conclusion. The output is independent from the input subproof, so that some assumption can be discharged (intuitive explanation below, formal discussion in deduction theorem )
+
+    >![natural deduction example](.imags/../imgs/natural_LEM.jpg)
+    > - inference rule like this do not need any assumption, so that it can be placed in any where needed.
+
+    **Summary**
+    - Every wff has no `bar` on top of it is an Assumption $\in \Gamma$. Should be placed on the left side of $\Gamma \vdash$.  
+    - `bar` represents some inference rule, a function, it takes subproof or wff as inputs and return a theorem as the output. These functions (inference rules) preserve truth, in other word they guarantee the validity between `input` and `output`.    
+    - Every wff under a `bar` is an theorem return (`proved`) by a function (`an inference rule`) evaluating on some kind of inputs(`subproof or wff`). The theorem should be placed on the right side of $\Gamma \vdash$. Thus $\Gamma \vdash W$
+    - `rules that take subproof as inputs allow us to discharge assumptions` : information in subproof has been included in the output of inference rule. In $\Gamma \vdash W$, $\Gamma$ contains all assumption that remain undischarged after proving $W$.
+     
+1. Different inference rules: 
+
+    There are many different set of inference rules. Each set could guarantee both `soundness` and `completeness`. In the book (`logic: the laws of truth`) there are five set of rules as follow: 
+    - N1 .
+    ![n1](imgs/n1.png)
+    - N2 .  N3 . N4 . N5 . 
+     
+        ![n2-5](imgs/n2-n5.png)
+        ![n2-5 details](imgs/n2-n5_detail.png)
+
+    - It is clear that: $\neg$ `introduction` and `elimination` can be replaced by many other rules and vice versa. 
+    - `TND` is `LEM (law of excluded middle)` and this is the one difference between `classical logic` and `constructive logic`. 
+    - $\neg$  how this is being interpreted is another difference between `classical logic` and `constructive logic`. 
+  
+1. Discharge   
+    In the relation ( $\Gamma , \gamma \vdash C$ ), when the truth of $C$ do not depends on $\gamma$, then $\gamma$ can be discharged from the left side of $\vdash$.
+
+    >   most of the time:   
+    >   `rules that take subproof as inputs allow us to discharge assumptions` :   
+    >   information of subproof is being included in the output of inference.
+
+   - material conditional : $\rightarrow$
+    ![conditional discharge](./imgs/conditional_discharge.jpg)
+    ```
+    Line 1
+    Given a set of assumptions to be true.
+    Inference rule proofs a conclusion to be true
+    ```
+    - **Line One** : This relation that assumptions proofs conclusion indicates the existence of ' $\vdash$ ' between assumptions and conclusion. we say $\vdash$ is `True`.
+    ```
+    Line 2
+    Given a set of assumptions to be true. 
+    Inference rule failed to proof the conclusion to be true
+    ```
+   - **Line Two**: This relation that assumptions failed to proof conclusion indicates the non-existence of ' $\vdash$ ' between assumptions and conclusion. we say $\vdash$ is `False`.
+
+    ```
+    Line 3
+    Given a set of assumptions to be false, it is equivalent to no assumptions at all.
+    The logic-truth conclusion depends on no assumption.
+    ```
+    - **Line Three**: This relation that a conclusion is true depends on no assumption indicates the existence of  ' $\vdash$ ' between nothing and a conclusion. We say $\vdash$ is `True` and represent logic-truth conclusion as $\vdash C$.
+
+    ```
+    Line 4
+    Given a set of assumptions to be false, it is equivalent to no assumptions at all.
+    Inference rule fail to prove the conclusion to be true.
+    ```
+    - **Line Four**: the semantic of $\vdash$ is to prove some conclusion to be `True`, thus the `False` assumption and `False` conclusion does not included in the expression of $\vdash$. So the existance of $\vdash$ relation between assumption and conclusion is not effected by this line. We say $\vdash$ is `True`.
+
+    **Conclusion:**  
+    - *Relations being represented by line 1-4 is the same as the relation expressed by material condition $\rightarrow$*.
+    - Information existence pattern used to describe $\vdash$ is included in $\rightarrow$, so discharge the assumption after reaching $\rightarrow$ is fine. 
+    - Whenever we write down $A \rightarrow B$ it always means this relation between $A$ and $B$ exists, thus the line One exists.
+    - The subproof itself can be seen as a function which takes an assumption $\alpha$ as input and conclude an theorem $\beta$ as output. $\rightarrow$ introduction rule equivalent to a representation of this function and can be used with $\rightarrow$ elimination rule.
+    - This is the intuitive understanding, formal discussion is the proof of **deduction theorem**.
+    
+    - $\neg$ & $\lor$ as introduced above in inference rule **N1**
+    ![neg_dischage](imgs/neg_dischage.png)
+    > Rather than saying that these assumptions are being discharged, it is more obvious that information of these subproof are being included/represented in remaining parts. Both $\neg$ introduction/elimination and $\lor$ elimination .
+
+1. Introduction and Elimination
+   - `introduction` rules capture the process you use to prove a certain kind of statement   
+        `for example:` The $\rightarrow$ introduction, it represent this function that take an assumption as input and prove a conclusion as output.
+        
+   - `elimination` rules explain how to use a fact you have already proved. 
+        `for example:` The $\rightarrow$ elimination rule, it represent the rule of the function described above.
+    >For example, to prove φ→ψ, you first assume φ, and then your new goal is to prove ψ. This is captured by the → introduction rule. (`Capture` is as described in `discharge` part of `→` )
+
+
+
+1. Restrictions in Predict logic
+1. Disadvantages: 
+   - Do not provide proofs of invalidity or other s-properties (unlike trees).  
+   - The structure of natural deduction proofs is more complex than the structure of axiomatic proofs. It does not give us such a simple handle on the relation of logical consequence (refers to `proof theory` for more information).
+
+# From Classical to Intiutionistic (constructive)
+
+1. Set, Function and True
+   `True` indicate the existence of a relation. 
+    It is not ambiguous to claim the existence of some thing. It is a certain process that based on existence we can inference another existence.
+    But is is ambiguous to claim the non-existence. Is it based on existence we can inference some `non-existence` or there is no `inference` at all ?
+
+    Proposition is `False`, relation is `False`, then there is nothing we could deal with. The `Classical Logic` focuses on preserving `Truth`(the existence). 
+    Furthermore, only `Truth` to `Truth` relations that could bring us certainties are valid inference rule: for example:
+     - 1.  `All A are B`
+     - 2.  `All C are B` 
+     - 3.  `All A are C`
+     ```
+     Assume, relations 1, 2, 3 are all true.    
+     There is no certain relation that can be used to inference 3 from 1 and 2. Actually we cannot get a certain relation combining 1 and 2.`
+     ```
+    **TODO** describe in set 
+
+
+   - something is exist     
+   - something is not exist 
+
+    Truth and existential 
+        --> detailed discussion combine with above discharge introduction
+
+    proof is about prove something to be true, even if we would like to proof a proposition $A$ to be false, it always start witha $\neg A$. 
+    All proof process pass truth in their structure  
+    But why not `Falsity` ?  it is related to tht relation between existence and `Being True`.
+
+1. [Relation between RAA, LEM, Proof by Contradiction, classical logic and intuitionistic logic](https://philosophy.stackexchange.com/questions/561/what-is-the-difference-between-reductio-ad-absurdum-and-proof-by-contradictio)
+   ![raa-lem](imgs/raa-lem.png)
+

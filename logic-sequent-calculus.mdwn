@@ -1,0 +1,5 @@
+
+## Sequent Calculus
+- **Readings** : [Richard Zach blog](https://richardzach.org)
+
+**TODO** : work on this together with trees 
