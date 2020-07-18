@@ -156,7 +156,7 @@
    - Do not provide proofs of invalidity or other s-properties (unlike trees).  
    - The structure of natural deduction proofs is more complex than the structure of axiomatic proofs. It does not give us such a simple handle on the relation of logical consequence (refers to `proof theory` for more information).
 
-# From Classical to Intiutionistic (constructive)
+# Classical to Intuitionistic 
 
 1. Set, Function and True
    `True` indicate the existence of a relation. 
@@ -185,6 +185,58 @@
     All proof process pass truth in their structure  
     But why not `Falsity` ?  it is related to tht relation between existence and `Being True`.
 
+1. RAA(`reductio ad absurdum`) & EFQ(`ex falso quodlibet`)
+    - [RAA (reductio as absurdum](https://en.wikipedia.org/wiki/Reductio_ad_absurdum)) is the form of [proof by contradiction](https://en.wikipedia.org/wiki/Proof_by_contradiction). 
+    - [EFQ (ex falso quodlibet)](https://en.wikipedia.org/wiki/Principle_of_explosion) is the form of deductive explosion. 
+   ![raa vs efq](imgs/RAA_EFQ_0.jpg)
+    ```
+    These two rules (form of arguments 'how arguments arranged together') represent two solutions when reaching `contradiction` in the proof process. 
+    ```
+    - `RAA` : Discharge one assumption from a subproof(input). It follows the [law of noncontradiction](https://en.wikipedia.org/wiki/Law_of_noncontradiction). If one assumption $\neg P$ implies two contradictory theorem $Q$ and $\neg Q$ (alternatively $Q$ and $Q \rightarrow \perp$, leads to $\perp$, as in the above chart.), then our assumpiton $\neg P$ must be wrong, thus $P$ must be true.
+   - `EFQ` : Has no effect on the assumption. Once reaching a contradiction, then every thing would be possible.
+
+        Here is an example that shows:   
+        $A \lor B , \neg B \vdash A$   
+        `stack form`
+        ![raa vs efq](imgs/RAA_EFQ_1.jpg)
+        `box form`
+        ![raa vs efq](imgs/RAA_EFQ_2.jpg)
+        Both solution would show that 
+        $A \lor B , \neg B \vdash A$ holds. As functions: 
+        - `RAA` takes a subproof as `input`.
+        - `EFQ` takes '$\perp$' as `input`.
+    - `EFQ` is actually a [implication](https://en.wikipedia.org/wiki/Proof_by_contradiction#Principle_of_explosion) of `RAA`. 
+    ![RAA implies EFQ](/imgs/RAA_EFQ_4.jpg)
+    - **Problem**: 
+        1. With RAA or EFQ we could actually prove any proposition we want ([principle of explosion](https://en.wikipedia.org/wiki/Proof_by_contradiction#Principle_of_explosion)).
+        1. If we want to show that the given proof(derivations) $A \lor B , \neg A \vdash B$ holds, then the behaviour of RAA or EFQ depends on our purpose or the assumptions. 
+            - In other words, we can only prove $B$ from $\perp$ in this case. 
+            - In other words, the output/input of function RAA and ERQ is not arbitrary in this case. 
+            - In other words, information of the assumption affect the compose of RAA and the output of EFQ. 
+            - In other words, they (RAA & EFQ) all need information that beyond the scope of their function, so that the proof could be meaningful. 
+            - These information is not being passed by the formalized computational rules of notations. It is being passed or constructed by the manipulator of the rules. 
+        1. **TODO** : Could it be possible to create a new method so that: 
+            - all possible theorem can be shown   
+            eg. $A \lor B , \neg A$ expressed in this new method could lead us to $B$ and all other valid conclusions.
+            - arguments that is not valid can be shown.
+            eg. $A \lor B , \neg A \vdash \neg B$, this is not a valid proof, and this new method should be above to give a unique result.
+            - equivalent proposition has an unique notation.
+            eg. $A\rightarrow B$ and $\neg A \lor B$ are equivalent , there should be only one notation for this configuration (as described in sets relation).
+            - able to handle plugin rules and axioms.
+            eg. without `LEM`, $\neg (P \rightarrow Q) \rightarrow (\neg P \lor \neg Q)$ is not valid.
+
+
 1. [Relation between RAA, LEM, Proof by Contradiction, classical logic and intuitionistic logic](https://philosophy.stackexchange.com/questions/561/what-is-the-difference-between-reductio-ad-absurdum-and-proof-by-contradictio)
    ![raa-lem](imgs/raa-lem.png)
+   ![logic systems](imgs/logic_systems.jpg)
+   [minimal logic](https://en.wikipedia.org/wiki/Minimal_logic)
 
+
+intuitionistic logic do not include double neagtion, the $ \vdash A \lor A$ can not be proved. 
+    - negation elimination 
+    - double negation
+    - low of excluded middle
+
+- In RAA (classical logic) The inforamtion of being truth or not is being contained in the function out put (output of RAA)
+- In intuitionistic logic, it focus on the proof process it self of reaching a certain theorem. thus, the information of the happending of a contridiction (in the subproof of RAA) do not equvilent to the information of how $B$ is proof or constructed (this is why it is usually being refered as contructinve mathmatics). 
+- 
