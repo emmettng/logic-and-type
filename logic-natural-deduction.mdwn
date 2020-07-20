@@ -152,6 +152,9 @@
 
 
 1. Restrictions in Predict logic
+
+    ## TODO  
+
 1. Disadvantages: 
    - Do not provide proofs of invalidity or other s-properties (unlike trees).  
    - The structure of natural deduction proofs is more complex than the structure of axiomatic proofs. It does not give us such a simple handle on the relation of logical consequence (refers to `proof theory` for more information).
@@ -225,18 +228,48 @@
             - able to handle plugin rules and axioms.
             eg. without `LEM`, $\neg (P \rightarrow Q) \rightarrow (\neg P \lor \neg Q)$ is not valid.
 
+1. Double negation, LEM, $\neg$ Elimination
 
-1. [Relation between RAA, LEM, Proof by Contradiction, classical logic and intuitionistic logic](https://philosophy.stackexchange.com/questions/561/what-is-the-difference-between-reductio-ad-absurdum-and-proof-by-contradictio)
-   ![raa-lem](imgs/raa-lem.png)
-   ![logic systems](imgs/logic_systems.jpg)
+   True implies existence. 
+   from existence deduced contradiction, then the existence is not True.
+
+   False implies non-existence.
+   From non-existence deduced contradiction, is is enough to assure the existence to be True? 
+
+   Double negation is the deny of non-existence 
+   no Double negation than LEM is not True for sure. 
+   Thus the $\neg$ elimination. ( how about RAA)
+
+
+2. [LEM, RAA, Proof by Contradiction, Double Negation. `Classical Logic and Intuitionistic Logic`](https://philosophy.stackexchange.com/questions/561/what-is-the-difference-between-reductio-ad-absurdum-and-proof-by-contradictio)
+   Brouwer observed that Law of Excluded Middle (Tertium Non Datur) was absgracted from finite situations, then extended without justification to statements about infinite collections. More generally, `LEM` is based upon an assumption that every mathematical problem has a solution [[1]](https://plato.stanford.edu/entries/logic-intuitionistic/#RejTerNonDat). Brouwer rejected this assumption. 
+
+   Recjecting `LEM` as a logic-truth equivalent 
+    1. rejecting `Double Negation: ` ($\neg \neg A \rightarrow A$)   
+    `or`
+    2. `RAA` only proves  `negative statement` ($\neg$ Introduction), in other words forbidden $\neg$ elimination. 
+   
+   As shown below, we can show that `LEM` ($A \lor \neg A$) is logic-truth without refering to `Double Negation` or `RAA`. In other words, $\neg$ elimination (RAA proves only negative statement), `Double negation` and `LEM` are equivalent to the intuitionistic methodology. 
+   ![LEM, double negation and RAA](.imgs/../imgs/LEM_doubleNegation_RAA.jpg)
+   - In intuitionistic logic (or `Constructive logic`), it focus on the direct evidence, hence a proof, of a statement. The direct proof of an statement is the evidence of the existence(`True`) of a statement. eg:
+      - Base on the assumption that `A` exists (is `True`), if there is a contradiction in our proof process, then this proof process is the direct evidence of the non-existence (`False`) of our assumption `A` ($\neg$ `Introduction`, aka, `RAA proves negative statement`). 
+      - Base on the assumption that `A` does not exist (is `False`), hence $\neg A$ is `True`. If there is a contradiction in our proof process, then this proof process is not a sufficient evidence of the non-existence (`False`) of `A`, because:
+        1. Contradiction in the proof process is being effected by the assumption that `A` is not exist (`False`).
+        2. Assumption `A` could be `False` as in classical logic and in common sense, thus leads to a contradiction in the following proof. 
+        3. Assumption `A` could simply being unsolvable, as described by Brouwer. It is possible that `A` is `True` but has no `proof` itself (This is also known as [Goldel's Incompleteness Theorems](https://plato.stanford.edu/entries/goedel-incompleteness/)) which could also leads to the contradiction in the following proof. 
+        4. Therefore, in this case, the contradiction in the proof process is not an sufficient evidence that `A` is `False`. In intuitionistic logic We must Assumption forbidden the $\neg$ `Elimination` rule. 
+      - It seems that we could always use `negation Introduction rule` to introduce the $\neg$ to an `negative statement` to get a `Double Negation`. Remember, this show the necessity of `No Double Negation` in intuitionistic logic. This by pass is not exist in `Intuitionistic Logic`.
+      - These are why `Intuitionistic Logic` usually being refereed as contractive logic. 
+
+    - `RAA` in `Classical Logic` contains both rules or at least `negation elimination`.
+      - `RAA` is a form about organizing arguments. It [indicates](https://en.wikipedia.org/wiki/Reductio_ad_absurdum#Principle_of_non-contradiction) if a proposition and its negation can both be derived logically from a premise, it can be concluded that the premise is false. It is equivalent to the $\neg$ `introduction` and $\neg$ `elimination` rules in system `N1` described above. It is also as shown in the above example: `RAA1` and `RAA2`. 
+      - `Proof by Contradiction` is the form of `RAA` that proves positive statement (in other words, $\neg$ `elimination`). This is why in the system `N5` above, RAA only includes the $\neg$ `elimination` parts, because that is still classical logic and with this rule `LEM` can be proved as a `logic-truth`
+    - Intuitionistic logic do not include: 
+      - `negation elimination`  (half of `RAA`)
+      - double negation
+      - low of excluded middle     
+    the $\vdash A \lor A$ can not be proved without these rules.
+    ![logic systems](.imgs/../imgs/logic_systems.jpg)
+
+### This world in our mind is more like being `constructed` than being `accepted`
    [minimal logic](https://en.wikipedia.org/wiki/Minimal_logic)
-
-
-intuitionistic logic do not include double neagtion, the $ \vdash A \lor A$ can not be proved. 
-    - negation elimination 
-    - double negation
-    - low of excluded middle
-
-- In RAA (classical logic) The inforamtion of being truth or not is being contained in the function out put (output of RAA)
-- In intuitionistic logic, it focus on the proof process it self of reaching a certain theorem. thus, the information of the happending of a contridiction (in the subproof of RAA) do not equvilent to the information of how $B$ is proof or constructed (this is why it is usually being refered as contructinve mathmatics). 
-- 

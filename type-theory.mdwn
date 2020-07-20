@@ -1,0 +1,1 @@
+- [minimal logic and type theory](https://en.wikipedia.org/wiki/Minimal_logic#Relation_to_type_theory)
