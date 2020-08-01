@@ -242,21 +242,22 @@
 
 
 2. [LEM, RAA, Proof by Contradiction, Double Negation. `Classical Logic and Intuitionistic Logic`](https://philosophy.stackexchange.com/questions/561/what-is-the-difference-between-reductio-ad-absurdum-and-proof-by-contradictio)
-   Brouwer observed that Law of Excluded Middle (Tertium Non Datur) was absgracted from finite situations, then extended without justification to statements about infinite collections. More generally, `LEM` is based upon an assumption that every mathematical problem has a solution [[1]](https://plato.stanford.edu/entries/logic-intuitionistic/#RejTerNonDat). Brouwer rejected this assumption. 
+   Brouwer observed that Law of Excluded Middle (Tertium Non Datur) was abstracted from finite situations, then extended without justification to statements about infinite collections. More generally, `LEM` is based upon an assumption that every mathematical problem has a solution [[1]](https://plato.stanford.edu/entries/logic-intuitionistic/#RejTerNonDat). Brouwer rejected this assumption. 
 
    Recjecting `LEM` as a logic-truth equivalent 
     1. rejecting `Double Negation: ` ($\neg \neg A \rightarrow A$)   
     `or`
     2. `RAA` only proves  `negative statement` ($\neg$ Introduction), in other words forbidden $\neg$ elimination. 
    
-   As shown below, we can show that `LEM` ($A \lor \neg A$) is logic-truth without refering to `Double Negation` or `RAA`. In other words, $\neg$ elimination (RAA proves only negative statement), `Double negation` and `LEM` are equivalent to the intuitionistic methodology. 
+   As shown below, we can show that `LEM` ($A \lor \neg A$) is logic-truth without refering to `Double Negation` or `RAA`. In other words, $\neg$ elimination (RAA proves only negative statement), `Double negation` and `LEM` are equivalent and are all not accepted  by the intuitionistic methodology. 
    ![LEM, double negation and RAA](.imgs/../imgs/LEM_doubleNegation_RAA.jpg)
    - In intuitionistic logic (or `Constructive logic`), it focus on the direct evidence, hence a proof, of a statement. The direct proof of an statement is the evidence of the existence(`True`) of a statement. eg:
-      - Base on the assumption that `A` exists (is `True`), if there is a contradiction in our proof process, then this proof process is the direct evidence of the non-existence (`False`) of our assumption `A` ($\neg$ `Introduction`, aka, `RAA proves negative statement`). 
+      - Base on the assumption that `A` exists (is `True`), if there is a contradiction in our proof process, then this proof process is the direct evidence of the non-existence (`False`) of our assumption `A` ($\neg$ `Introduction`, aka, `RAA proves negative statement`). Actually the definition $\neg A := A \rightarrow \perp$ is exactly the $\neg$ `Introduction` rule (The information of `A` leads to a contradiction $\perp$ is the proof of $\neg A$.).
       - Base on the assumption that `A` does not exist (is `False`), hence $\neg A$ is `True`. If there is a contradiction in our proof process, then this proof process is not a sufficient evidence of the non-existence (`False`) of `A`, because:
-        1. Contradiction in the proof process is being effected by the assumption that `A` is not exist (`False`).
+        1. Contradiction in the proof process is being effected by the information of A being `False`.
         2. Assumption `A` could be `False` as in classical logic and in common sense, thus leads to a contradiction in the following proof. 
-        3. Assumption `A` could simply being unsolvable, as described by Brouwer. It is possible that `A` is `True` but has no `proof` itself (This is also known as [Goldel's Incompleteness Theorems](https://plato.stanford.edu/entries/goedel-incompleteness/)) which could also leads to the contradiction in the following proof. 
+        3. Assumption `A` could simply being unsolvable, as described by Brouwer. It is possible that `A` is `True`(or `False`) but  has no `proof`(This is also known as [Goldel's Incompleteness Theorems](https://plato.stanford.edu/entries/goedel-incompleteness/)), this piece of information could also leads to the contradiction in the following proof. 
+
         4. Therefore, in this case, the contradiction in the proof process is not an sufficient evidence that `A` is `False`. In intuitionistic logic We must Assumption forbidden the $\neg$ `Elimination` rule. 
       - It seems that we could always use `negation Introduction rule` to introduce the $\neg$ to an `negative statement` to get a `Double Negation`. Remember, this show the necessity of `No Double Negation` in intuitionistic logic. This by pass is not exist in `Intuitionistic Logic`.
       - These are why `Intuitionistic Logic` usually being refereed as contractive logic. 
