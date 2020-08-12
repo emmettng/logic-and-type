@@ -79,6 +79,7 @@
     - `bar` represents some inference rule, a function, it takes subproof or wff as inputs and return a theorem as the output. These functions (inference rules) preserve truth, in other word they guarantee the validity between `input` and `output`.    
     - Every wff under a `bar` is an theorem return (`proved`) by a function (`an inference rule`) evaluating on some kind of inputs(`subproof or wff`). The theorem should be placed on the right side of $\Gamma \vdash$. Thus $\Gamma \vdash W$
     - `rules that take subproof as inputs allow us to discharge assumptions` : information in subproof has been included in the output of inference rule. In $\Gamma \vdash W$, $\Gamma$ contains all assumption that remain undischarged after proving $W$.
+    - `LEM` depends on no assumption, in other words: `nothing above the bar`, this indicates that `LEM` is an axiom in this system.
      
 1. Different inference rules: 
 

@@ -1,1 +1,35 @@
 - [minimal logic and type theory](https://en.wikipedia.org/wiki/Minimal_logic#Relation_to_type_theory)
+
+> failing to affirm the `decidability of every proposition`
+> `is not the same at all as`
+> refuting the `decidability of every proposition`
+> [from Type theory foundation, lecture 2](https://www.youtube.com/watch?v=3JHTb6b1to8)
+
+![LEM](imgs/LEM_doubleNegation_RAA.jpg)
+$\vdash ((A \lor A \rightarrow \perp)\rightarrow \perp)\rightarrow \perp$ is equivalent to $\neg (\neg (A \lor \neg A))$
+
+`does not refute the law of excluded middle` : `LEM` could involve as an assumption but not an logic truth.
+
+This is where the power of intuitionistic logic come from 
+It strength the expressiveness of intuitionistic logic
+it is pure loss if you impose the assumption that everyting is decidable.
+With intuitionistic logic we could selectively draw the distinction of scenarios that decidableity is possible and not.
+
+decidability and LEM
+axiom of choice <--> decidability 
+
+$M : A$
+- M is a term (program, expression) of the data type A
+- M is a proof (derivation) of the formula A
+
+formula as type and proof as term embedding
+
+|||||
+|:--:|:--:|:--:|:--:|
+|set theory | proof finding| semantic information   | semantic checking |
+|type theory| proof checking| syntactic information | analytic checking|
+
+
+the understanding of a program could be generalized 
+So be better to introduce with an example with 
+Program <--> Type as Proof and formula relation
