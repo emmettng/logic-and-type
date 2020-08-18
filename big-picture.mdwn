@@ -1,0 +1,16 @@
+The illustration of this big-picture focus on ***the cause effect relation***. 
+
+I would like to know: 
+
+1. The origin of a **Theory**
+    - What problem this **Theory** want to solve ? 
+1. The limitation of a **Theory**
+    - Contradiction 
+    - philosophy paradox
+    - compensate **Theory**
+
+Based on understanding of previous two points, there are two kinds of relations between theories:
+   - Relation Between theories. 
+        **Theory B** could be developed for fixing some problem of **Theory A**.
+   - Differences between theories.
+        **Theory B**, **Theory C**, **Theory D** ... these theories all aims to fix certain problem of **Theory A** however each focus on different aspect. 

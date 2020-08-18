@@ -1,0 +1,47 @@
+
+## lambda cube 
+1. terms -> terms  :  function 
+1. terms -> Types  : dependent type 
+1. Types -> terms  : parametric polymorpism 
+1. Types -> Types  : type family ?? (need to make sure)
+
+
+## type family 
+relation concepts:
+- GADTs
+- Type families 
+- functional dependencies 
+- type synonyms
+- type classes
+- multi-parameter type classes
+
+
+type family , GADTs, functional dependencies 
+**solving the same problem**
+
+1. objects **A** and **B** 
+
+1. A `Morphism` between **A** and **B** is a `Patterns` or `Structures`.
+
+1. When defining a **new morphism** between **A** and **B**. 
+    -  There could be `existing morphism` between **A** and **B**. 
+
+- A and B are `Types`
+    1. For any **new morphism** between A and B, it will refer to at most one `existing structure` between **A** and **B**. 
+    1. This **new morphsim** is a function of type `A -> B`
+    1. Different implementation of the same type will be refers to different function name.
+- A and B are `Type Variables`
+    1. For any **new morphism** between A and B, it could refer to more than one `existing structure` between **A** and **B**.
+    1. This **new morphism** is  a type class 
+        ```
+        class NewClass a b where 
+            func :: a -> b -> ... 
+        ```
+        **?TODO** what is the codomain restrict mentioned in http://www.mchaver.com/posts/2017-06-21-type-families.html?
+        The necessity of introducing type/data family
+    1. Different existing morphism between **A** and **B** needs speratly defined 
+
+||A & B|
+|:--:|:--:|
+| A & B | |
+| Types| |
