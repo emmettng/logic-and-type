@@ -1,3 +1,161 @@
+=== TO BE PROCESSing ====
+ **Terms**: are the values you can manipulate—the things that exist at runtime. 
+ **Types**: however, are little more than sanity-checks: proofs to the compiler (and ourselves) that the programs we’re trying to write make some amount of sense.
+
+**Type Families**:  An indexed type family in type theory is a partial function at the type level. Applying the function to parameters (called type indices) yields a type. Type families permit a program to compute what data constructors it will operate on, rather than having them fixed statically (as with simple type systems) or treated as opaque unknowns (as with parametrically polymorphic types).
+
+**Type Family , GADTs, functional dependencies**: GADTs bear some similarity to type families, in the sense that they allow a parametric type's constructors to depend on the type's parameters. However, all GADT constructors must be defined in one place, whereas type families can be extended. Functional dependencies are similar to type families, and many type classes that use functional dependencies can be equivalently expressed with type families. Type families provide a more functional style of type-level programming than the relational style of functional dependencies.
+
+Given the functionality provided by GADTs (Generalised Algebraic Data Types), it might seem as if a definition, such as the above, should be feasible. However, type families - in contrast to GADTs - are open; i.e., new instances can always be added, possibly in other modules. Supporting pattern matching across different data instances would require a form of extensible case construct.
+
+**Closed & Open type family**:
+A top-level type family can be declared as open or closed. (Associated type families are always open.) A closed type family has all of its equations defined in one place and cannot be extended, whereas an open family can have instances spread across modules. The advantage of a closed family is that its equations are tried in order, similar to a term-level function definition:
+
+**[Type-level Computation & Theorem Proving](https://wiki.haskell.org/Type_arithmetic)**
+Type-level computation may also include type representations of boolean values, lists, trees and so on. It is closely connected to theorem proving, via the [Curry-Howard isomorphism](https://en.wikipedia.org/wiki/Curry%E2%80%93Howard_correspondence).
+
+**Type-level analysis**: 
+- rewrite data structure , the tic-tac-toe example
+
+**Terms & Types**
+- Terms are the values you can manipulate—the things that exist at runtime. 
+- Types, however, are little more than sanity-checks: proofs to the compiler (and ourselves) that the programs we’re trying to write make some amount of sense.
+
+**Promoted Data Constructor**: 
+Promoted data constructors are of the wrong kind to ever exist at runtime.
+    - Type - level programming(computation) / Theorem Proving is static compile time checking.
+
+**Kind**:
+describe structure/pattern of types with kinds information. 
+```
+*Main Lib GHC.TypeLits> :k [Bool]
+[Bool] :: *
+*Main Lib GHC.TypeLits> :k Maybe
+Maybe :: * -> *
+Main Lib GHC.TypeLits> :k Functor
+Functor :: (* -> *) -> Constraint
+*Main Lib GHC.TypeLits> :k '[]
+'[] :: [a]
+*Main Lib GHC.TypeLits> :k '(:)
+'(:) :: a -> [a] -> [a]
+*Main Lib GHC.TypeLits> :k CmpSymbol 
+CmpSymbol :: Symbol -> Symbol -> Ordering
+```
+- `[Bool]`structure(function) of primitive type. It represent a type of kind `TYPE`.
+- `Maybe` structure(function) of types. From kind `TYPE` to `TYPE`
+- `Functor` structure(function) of types. Take two types of kinds `TYPE` and returns a type of kind `Constraint`.
+- `'[]` structure(function) of primitive types. Represent a list of type with any kind `a`.
+- `'(:)` structure(function) of types. Take a type of kind `a` and a type of kind `[a]`, returns a type of kind `[a]`.
+- `CmpSymbol` structure(function) of types. Take two types of kind `Symbol`, returns a type of kind `Ordering`.
+
+**Type level programming**:
+- promoted datatypes
+- kind polymorphism
+- type families
+type level programming usually being used in functions signature parts. That is where type relation being expressed.
+
+**Checking**: 
+- run time checking 
+- compile time checking . Type-level COmputation / Theorem Proving is static compile time checking 
+- Use the type system to encode the extra information. Anything we do at the type-level is free at runtime. 
+
+**Illustration structure** 
+1. A --> .. --> B 
+1. A --> B 
+1. introduce intuitive necessity of kind * -> * 
+1. examples of generlised tries, from common usage, to functional dependencies , to type families
+
+**Constructor,Functor,Pattern,Structure and Type Constrain**
+- data constructor are functions, it describe the structure of input type and target type. It is also a pattern that can be used to do pattern match. 
+    - Defining Type Structures we could place Kind Constrain on it 
+
+    ```
+    dataHList(ts::[Type]) where 
+        HNil :: HList '[] 
+        (:#) :: t -> HList ts -> HList (t ': ts)
+    infixr 5 :#
+    ```
+- closed type family are also functions, it describe type structure of a certain kind.
+
+**Type system, Kind system, Role System**:
+- type system ensures the terms are used correctly, and the kind system ensures types are logical, the role system ensures coercions are safe.
+
+**Phantom type**
+Proxy, for example, has a phantom type variable:
+`data Proxy a = Proxy`
+The type variable a is at role phantom, and as expected, Coercible (Proxy a) (Proxy b)is always true.
+Since `a` doesn’t actually ever exist at runtime, it’s safe to change it whenever we’d like.
+ - `Phantom type` compile time checking
+
+**FlexibleInstances & OVERLAPPING**
+Common type class works on type constructor with type variables, such as ` param :<< a`. In this case it include concrete type `String`, thus needs this GHC extension `FlexibleInstances`.
+```
+instance {-# OVERLAPPING #-} HasPrintf a => HasPrintf(String :<< a) where
+    type Printf (String :<< a) = String -> Printf a 
+    format s _ param = format (s <> param) (Proxy @a)
+```
+because there is a more general instance defined before, thus needs `OVERLAPPING` to specify the use of this instance.
+
+>Writing this instance will require the -XFlexibleInstances extension, since the instance head is no longer just a single type constructor and type variables. 
+>We mark the instance with the {-# OVERLAPPING #-} pragma because we’d like to select this instance instead of case 3 when the parameter is a String.
+
+**First class type family**:
+```
+type family Or (x :: Bool) (y :: Bool) :: Bool where 
+    Or 'True y = 'True
+    Or 'False y = y
+
+type family Map (x :: a -> b) (i :: [a]) :: [b] where       
+    Map f '[] = '[]
+    Map f (x ': xs) = f x ': Map f xs
+```
+When using a closed type-family, it is necessary to firstly saturating it. eg. when useing `OR`: Passing only one parameter instead of the two will lead to an error and GHC refuses to compile this program.
+```
+> :t undefined :: Proxy (Map (Or 'True) '[ 'True, → 'False, 'False ])
+<interactive >:1:14: error: The type family ‘’Or should have 2 arguments, but has been given 1....
+```
+it was believed that type families had no chance of being first class; because they’re unable to be partially applied, Every type-level fmap would need to be specialized with its mapping function built-in, and there seemed no way of abstracting away this repetitive boilerplate. [Thinking with Types (Chapter 10)](https://www.google.co.uk/search?q=thinking+in+types&cad=h).
+
+term level analogy: 
+```
+class Eval l t | l -> t where  
+    eval :: l -> t
+
+data MapList dfb a = MapList (a->dfb) [a]
+
+instance Eval dfb dft => Eval (MapList dfb a) [dft] where 
+    eval (MapList f []) = []
+    eval (MapList f (a : as)) = eval (f a) : eval (MapList f as)
+
+```
+
+1. In term level, partially applied function(function on expressions of different kinds) is about partially supply `iterms of different types`.
+1. In type level, partially applied type-family(function on types of different kind) is about partially supply `types of different kinds`. 
+1. term level is possible and type level is not allowed (**TO DO** need to know why).
+1. We could rewrite a term level function as above, so similarly we could achieve type level partial apply in similar way.
+```
+type family Eval (e :: Exp a) :: a
+
+type Exp a = a -> Type
+
+data Snd :: (a, b) -> Exp b
+
+type instance Eval (Snd '(a, b)) = b
+```
+
+**Type-Level Programming** 
+When doing type-leve programming, we are literally, `constructing` the casual-effect relation, and the `proof(derivation)` goes strictly follow the `substitution` laws, so the formula of `kinds` get proved.
+**TODO** supply with the monad example of `Exp a`, that is GOOD!
+**TODO** discuss the role of `Exp a`
+
+
+**type as formula and term as proof**
+![type and logic](imgs/type-theory-iso-1.jpg)
+- application & abstraction are all based on `definition 3` of `simple type theory`.
+- In the end, the closed well typed formula is constructed based on these two rules smoothly.
+- the unmentioned part is in simple type theory (aka: $\rightarrow \lambda$), $\alpha \rightarrow \gamma$ indicate relation that needs to be provided or constructed by ourself.
+
+================= 
 
 ## lambda cube 
 1. terms -> terms  :  function 
@@ -7,16 +165,16 @@
 
 
 ## type family 
-relation concepts:
+related concepts:
 - GADTs
 - Type families 
 - functional dependencies 
-- type synonyms
-- type classes
-- multi-parameter type classes
+>> type synonyms
+>> type classes
+>> multi-parameter type classes
 
 
-type family , GADTs, functional dependencies 
+
 **solving the same problem**
 
 1. objects **A** and **B** 
